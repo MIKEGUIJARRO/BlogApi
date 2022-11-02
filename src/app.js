@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 const express = require('express');
 const cors = require('cors')
 
+const { router: serverRoutes } = require('./api/server');
+
 dotenv.config({ path: "./config/config.env" });
 
 // App architecture
@@ -17,13 +19,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/v1/', (req, res, next) => {
-    res.status(200).json({
-        success: true,
-        data: {
-            route: 'getBlog'
-        }
-    });
-});
+app.use('/api/v1/', serverRoutes);
 
 module.exports = { app }
