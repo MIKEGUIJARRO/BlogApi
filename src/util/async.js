@@ -1,5 +1,5 @@
 // This function allow to wrap our controllers
-// in a fn thar returns a Promise, which will 
+// in a fn that returns a Promise, which will 
 // resolve or fail.
 // This fn abstracts the try / catch
 // logic in a single wrapper fn 
