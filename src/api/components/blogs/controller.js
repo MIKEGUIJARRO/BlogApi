@@ -1,14 +1,16 @@
-module.exports.getBlogs = (req, res, next) => {
+const asyncHandler = require('../../../util/async')
+
+module.exports.getBlogs = asyncHandler((req, res, next) => {
     res.status(200).json({
         success: true,
         data: {
             route: 'getBlogs'
         }
     });
-}
+});
 
-module.exports.getBlog = (req, res, next) => {
-    const {id} = req.params;
+module.exports.getBlog = asyncHandler((req, res, next) => {
+    const { id } = req.params;
     res.status(200).json({
         success: true,
         data: {
@@ -16,10 +18,10 @@ module.exports.getBlog = (req, res, next) => {
             id: id,
         }
     });
-}
+});
 
-module.exports.createBlog = (req, res, next) => {
-    const {id} = req.params;
+module.exports.createBlog = asyncHandler((req, res, next) => {
+    const { id } = req.params;
     res.status(200).json({
         success: true,
         data: {
@@ -27,10 +29,10 @@ module.exports.createBlog = (req, res, next) => {
             id: id,
         }
     });
-}
+});
 
-module.exports.updateBlog = (req, res, next) => {
-    const {id} = req.params;
+module.exports.updateBlog = asyncHandler((req, res, next) => {
+    const { id } = req.params;
     res.status(200).json({
         success: true,
         data: {
@@ -38,10 +40,10 @@ module.exports.updateBlog = (req, res, next) => {
             id: id,
         }
     });
-}
+});
 
-module.exports.deleteBlog = (req, res, next)=> {
-    const {id} = req.params;
+module.exports.deleteBlog = asyncHandler((req, res, next) => {
+    const { id } = req.params;
     res.status(200).json({
         success: true,
         data: {
@@ -49,4 +51,4 @@ module.exports.deleteBlog = (req, res, next)=> {
             id: id,
         }
     });
-}
+});
