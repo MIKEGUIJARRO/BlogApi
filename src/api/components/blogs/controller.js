@@ -3,7 +3,7 @@ const ErrorResponse = require('../../../util/ErrorResponse');
 const blog = require('../../model/Blog');
 
 module.exports.getBlogs = asyncHandler(async (req, res, next) => {
-
+    
     // Pagination
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 25;
