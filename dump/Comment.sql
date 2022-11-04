@@ -7,5 +7,5 @@ CREATE TABLE Comment (
     comment VARCHAR(2000) NOT NULL,
     blog_id INT NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY(blog_id) REFERENCES Blog(id)
+    FOREIGN KEY(blog_id) REFERENCES Blog(id) ON DELETE CASCADE
 );
