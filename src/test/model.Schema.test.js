@@ -54,7 +54,37 @@ describe('Schema Model Unit Test', () => {
             expect(fn()).rejects.toThrow()
         });
     });
+    describe('findWhere() functionality', () => {
+        it('should send a successful response', async () => {
+            const startRow = 1;
+            const limit = 2;
+            const db = new Database();
+            const conditions = {
+                blog_id: 1
+            }
+            const response = await schema.findWhere(startRow, limit, conditions);
 
+            expect(response).toEqual({ rows: ['data'], fields: ['data'] });
+            expect(db.query).toBeCalled();
+        });
+
+        it('should throw an error if the query is incorrect', async () => {
+            const startRow = 1;
+            const limit = 2;
+            const conditions = {
+                blog_id: 1
+            }
+            const db = new Database();
+
+            db.query.mockImplementationOnce(() => {
+                throw new Error()
+            });
+            const fn = async () => {
+                const response = await schema.findWhere(startRow, limit, conditions);
+            }
+            expect(fn()).rejects.toThrow()
+        });
+    })
     describe('findById() functionality', () => {
         it('should find a user successfully', async () => {
             const id = 1;
@@ -73,6 +103,34 @@ describe('Schema Model Unit Test', () => {
 
             const fn = async () => {
                 const response = await schema.findById(id);
+            }
+            expect(fn()).rejects.toThrow();
+        });
+    });
+
+    describe('findByIdWhere() functionality', () => {
+        it('should find a user successfully', async () => {
+            const id = 1;
+            const conditions = {
+                blog_id: 1
+            }
+            const response = await schema.findByIdWhere(id, conditions);
+            expect(response).toEqual({ rows: ['data'], fields: ['data'] });
+            expect(response.rows.length).toBe(1);
+        });
+
+        it('should throw if the user does not exists', async () => {
+            const id = 100;
+            const db = new Database();
+            const conditions = {
+                blog_id: 1
+            }
+            db.query.mockImplementationOnce(() => {
+                return { rows: [], fields: [] }
+            });
+
+            const fn = async () => {
+                const response = await schema.findByIdWhere(id, conditions);
             }
             expect(fn()).rejects.toThrow();
         });
@@ -157,6 +215,49 @@ describe('Schema Model Unit Test', () => {
         });
     });
 
+    describe('findByIdAndUpdateWhere() functionality', () => {
+        it('should throw if the body is not an object', async () => {
+            const id = 1;
+            const body = [];
+            const conditions = {
+                blog_id: 1
+            }
+            const fn = async () => {
+                const response = await schema.findByIdAndUpdateWhere(id, body, conditions);
+            }
+            expect(fn()).rejects.toThrow();
+        });
+        it('should throw if the keys of the body does not match the public columns inside of the class', async () => {
+            const id = 1;
+            const body = {
+                titlee: 'title 1',
+            };
+            const conditions = {
+                blog_id: 1
+            }
+            const fn = async () => {
+                const response = await schema.findByIdAndUpdateWhere(id, body, conditions);
+            }
+            expect(fn()).rejects.toThrow();
+        });
+
+        it('should create an instance successfully', async () => {
+            const findByIdMock = jest.spyOn(Schema.prototype, 'findById');
+            const id = 1;
+            const body = {
+                title: 'title 2',
+            };
+            const conditions = {
+                blog_id: 1
+            }
+            const db = new Database();
+            const response = await schema.findByIdAndUpdateWhere(id, body, conditions);
+            expect(response).toEqual({ rows: ['data'], fields: ['data'] });
+            expect(db.query).toBeCalled();
+            expect(findByIdMock).toBeCalled();
+        });
+    })
+
     describe('findByIdAndDelete() functionality', () => {
         it('should throw if the user does not exists', async () => {
             const id = 100;
@@ -184,6 +285,38 @@ describe('Schema Model Unit Test', () => {
         });
     });
 
+    describe('findByIdAndDeleteWhere() functionality', () => {
+        it('should throw if the user does not exists', async () => {
+            const id = 100;
+            const db = new Database();
+            const conditions = {
+                blog_id: 1
+            }
+            db.query.mockImplementationOnce(() => {
+                return { rows: [], fields: [] }
+            });
+
+            const fn = async () => {
+                const response = await schema.findByIdAndDeleteWhere(id, conditions);
+            }
+            expect(fn()).rejects.toThrow();
+        });
+
+        it('should delete the instance successfully', async () => {
+            const id = 1;
+            const db = new Database();
+            const findByIdMock = jest.spyOn(Schema.prototype, 'findById');
+            const conditions = {
+                blog_id: 1
+            }
+            const response = await schema.findByIdAndDeleteWhere(id, conditions);
+
+            expect(response).toEqual({ rows: ['data'], fields: ['data'] });
+            expect(db.query).toBeCalled();
+            expect(findByIdMock).toBeCalled();
+        });
+    })
+
     describe('countRows() functionality', () => {
         it('should return a number', async () => {
             const db = new Database();
@@ -192,6 +325,21 @@ describe('Schema Model Unit Test', () => {
             });
 
             const response = await schema.countRows();
+            expect(response).toBe(5);
+            expect(db.query).toBeCalled();
+        });
+    });
+
+    describe('countRowsWhere() functionality', () => {
+        it('should return a number', async () => {
+            const db = new Database();
+            db.query.mockImplementationOnce(async () => {
+                return Promise.resolve({ rows: [{ total: 5 }] });
+            });
+            const conditions = {
+                blog_id: 1
+            }
+            const response = await schema.countRowsWhere(conditions);
             expect(response).toBe(5);
             expect(db.query).toBeCalled();
         });

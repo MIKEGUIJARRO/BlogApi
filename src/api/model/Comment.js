@@ -1,12 +1,14 @@
+const Database = require('../../services/Database');
 const Schema = require('./Schema');
-class Blog extends Schema {
+
+class Comment extends Schema {
     #table = null;
     #columns = null
     constructor() {
-        const table = 'Blog';
+        const table = 'Comment';
         const columns = {
             restricted: ['id', 'created_at', 'updated_at'],
-            public: ['active', 'title', 'thumbnail_url', 'body']
+            public: ['user', 'comment', 'blog_id']
         }
         super(table, columns);
         this.#columns = columns;
@@ -14,4 +16,4 @@ class Blog extends Schema {
     }
 }
 
-module.exports = new Blog();
+module.exports = new Comment();
