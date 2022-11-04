@@ -28,7 +28,7 @@ describe('Database Class Unit Test', () => {
         jest.clearAllMocks();
     });
 
-    describe('constructor functionality', () => {
+    describe('constructor() functionality', () => {
 
         it('should run the mysql instantiation routing', () => {
             const pool = mysql.createPool();
@@ -47,7 +47,7 @@ describe('Database Class Unit Test', () => {
         });
     });
 
-    describe('query method functionality', () => {
+    describe('query() functionality', () => {
         
         it('should execute the query fn', async () => {
             const pool = mysql.createPool();
@@ -56,7 +56,6 @@ describe('Database Class Unit Test', () => {
             const fn = async () => {
                 return await dbRef.query(query);
             }
-            console.log(await fn())
             expect(fn()).resolves.toEqual({rows: 'rows', fields: 'fields'});
         })
     });
