@@ -6,7 +6,7 @@
 </h2>
 
 ## Comments 🎙
-In order to run this application is important to run create a `config.env` inside `/src/config/config.env`. 
+In order to run this application is important to create a `config.env` inside `/src/config/config.env`. 
 The `env` file needs to contain the next environment variables:
 
 - PORT=5000
@@ -33,10 +33,11 @@ The app can be accessed on localhost with the url: `https://localhost:5000/`
 ⚡️ Clean code \
 ⚡️ Unit Testing (AAA) \
 ⚡️ Dessign Patterns (Singleton) \
-⚡️ Algorithms and Data Structures
+⚡️ Algorithms and Data Structures \
+⚡️ Git Flow (Manual Implementation) 
 
 ## Acknowledgments 🎁
-I was motivated to build this project thanks to the <a href="https://sicuentame.com/">Cuentame</a> application. I wanted to showcase my skills as developer:
+I was motivated to build this project thanks to the <a href="https://sicuentame.com/">Cuentame</a> job application. I wanted to showcase my skills as developer:
 - I can build from the idea stage to final product
 - Follow good practices and strive for clean code 
 - I am a well rounded developer that is always looking for technical excellence 🏁
