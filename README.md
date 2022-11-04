@@ -19,7 +19,7 @@ The `env` file needs to contain the next environment variables:
 - RDS_PORT
 - RDS_DATABASE
 
-This app can be run on a `development` environment using the command `npm run dev`;
+This app can be run on a `development` environment using the command `npm run dev`
 
 The app can be accessed on localhost with the url: `https://localhost:5000/` 
 
