@@ -17,9 +17,10 @@ class Database {
             user: process.env.RDS_USER,
             password: process.env.RDS_PASSWORD,
             port: process.env.RDS_PORT,
+            database: process.env.RDS_DATABASE,
             waitForConnections: true,
         });
-        
+
         pool.getConnection((err, connection) => {
             if (err) {
                 console.log(err);
@@ -31,7 +32,6 @@ class Database {
         });
 
         const promisePool = pool.promise();
-        
         this.#pool = pool;
         this.#promisePool = promisePool;
 
@@ -39,8 +39,8 @@ class Database {
         Database.instance = this;
     }
 
-    async query(sql) {
-        const [rows, fields]  = await this.#promisePool.query(sql);
+    async query(sql, values = null) {
+        const [rows, fields] = await this.#promisePool.query(sql, values);
         return {
             rows,
             fields
